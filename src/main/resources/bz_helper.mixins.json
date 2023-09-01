@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "org.mainbzclass.bz_helper.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "bz-helper.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
