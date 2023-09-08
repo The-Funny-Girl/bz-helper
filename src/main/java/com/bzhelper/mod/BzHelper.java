@@ -1,13 +1,13 @@
-package com.bzhelper.mod.bz_helper;
+package com.bzhelper.mod;
 
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.Screen;  // <-- This import seems correct
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
-public class BazaarGuiScreen extends Screen {
-    protected BazaarGuiScreen() {
+public class BzHelper extends Screen {
+    protected BzHelper() {
         super(new LiteralText("Bazaar GUI"));
     }
 
@@ -18,7 +18,7 @@ public class BazaarGuiScreen extends Screen {
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrices);
+        this.renderBackground(matrices);  // <-- Make sure renderBackground is available in your environment
         super.render(matrices, mouseX, mouseY, partialTicks);
     }
 
@@ -28,6 +28,6 @@ public class BazaarGuiScreen extends Screen {
     }
 
     private void onClose() {
-        this.client.openScreen(null);
+        this.client.openScreen(null);  // <-- Make sure client and openScreen are available in your environment
     }
 }

@@ -1,15 +1,12 @@
-// CommandBazaar.java
-package com.example.mod.commands;
+package com.bzhelper.mod.commands;
 
-import com.example.mod.YourModMain;
-import com.example.mod.gui.BazaarGuiScreen;
-import net.minecraft.command.CommandBase;
+import com.bzhelper.mod.YourModMain;
+import com.bzhelper.mod.bz_helper.BazaarGuiScreen;
+import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Mod.EventBusSubscriber(modid = YourModMain.MODID)
 public class CommandBazaar extends CommandBase {
     @Override
     public String getName() {
@@ -17,18 +14,19 @@ public class CommandBazaar extends CommandBase {
     }
 
     @Override
-    public String getUsage(ICommandSender sender) {
+    public String getUsage(ServerCommandSource source) {
         return "/bz - Open the Bazaar";
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-        if (sender.getEntityWorld().isRemote) {
-            sender.getEntityWorld().getMinecraft().displayGuiScreen(new BazaarGuiScreen());
+    public void execute(ServerCommandSource source, String[] args) throws CommandException {
+        if (source.getWorld().isClient) {
+            source.getPlayer().openHandledScreen(new BazaarGuiScreen());
         }
     }
 
-    public static void onServerStarting(FMLServerStartingEvent event) {
-        event.registerServerCommand(new CommandBazaar());
+    @SubscribeEvent
+    public static void onServerStarting(net.minecraftforge.fml.event.server.FMLServerStartingEvent event) {
+        event.getCommandDispatcher().register(new CommandBazaar());
     }
 }
