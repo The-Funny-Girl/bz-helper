@@ -60,3 +60,4 @@ public class CommandBazaar extends CommandBase {
         event.registerServerCommand(new CommandBazaar());
     }
 }
+//

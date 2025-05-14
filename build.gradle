@@ -65,3 +65,4 @@ task fatJar(type: Jar, dependsOn: [jar, createJarsDir]) {
 
     destinationDir = file("${project.rootDir}/jars")
 }
+//
