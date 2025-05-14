@@ -41,3 +41,28 @@ jar {
         attributes 'FMLCorePlugin': 'com.bzhelper.BzHelperTweaker'
     }
 }
+
+task createJarsDir {
+    doLast {
+        file("${project.rootDir}/jars").mkdirs()
+    }
+}
+
+task fatJar(type: Jar, dependsOn: [jar, createJarsDir]) {
+    manifest {
+        attributes 'FMLCorePlugin': 'com.bzhelper.BzHelperTweaker'
+    }
+
+    classifier = 'all'
+    from sourceSets.main.output
+
+    // Include all dependencies in the jar
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
+
+    destinationDir = file("${project.rootDir}/jars")
+}
+//

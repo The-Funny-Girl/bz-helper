@@ -1,33 +1,56 @@
 package com.bzhelper.mod.bz_helper;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.until.math.MatrixStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiButton;
 
-public class BazaarGuiScreen extends
-Screen {
-    protected BazzarGuiScreen(Text title) 
-    {
-        super(title);
+public class BazaarGuiScreen extends GuiScreen {
+
+    public BazaarGuiScreen() {
+        // No need for title parameter in Forge 1.8.9
     }
 
     @Override
-    public void render (MatrixStackmatrices, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrieces);
-        super.render(matrices, mouseX, mouseY, partialTicks);
+    public void initGui() {
+        // Add close button
+        this.buttonList.add(new GuiButton(
+                0,
+                this.width / 2 - 50,
+                this.height / 2 - 10,
+                100,
+                20,
+                "Close"
+        ));
     }
 
-@Override
-protected void inti() 
-    {this.addButton(newButtonWidget(this.width / 2 - 50, this.height / 2 - 10, 100, 20 new LiteralText("Close"), 
-                                    button -> this.onClose()));
-        }
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        // Draw background
+        this.drawDefaultBackground();
 
-    pritvate void onClose() {
-        this.client.openScreen(null);
+        // Draw title
+        this.drawCenteredString(this.fontRendererObj, "Bazaar Helper", this.width / 2, 20, 0xFFFFFF);
+
+        // Draw buttons and other components
+        super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton button) {
+        // Handle button clicks
+        if (button.id == 0) {
+            this.onClose();
+        }
+    }
+
+    private void onClose() {
+        // Close this screen
+        this.mc.displayGuiScreen(null);
+    }
+
+    @Override
+    public boolean doesGuiPauseGame() {
+        return false;
     }
 }
-        
-            
+//
