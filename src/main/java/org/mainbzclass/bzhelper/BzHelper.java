@@ -1,5 +1,4 @@
-// Fix for BZHelper.java
-// Make sure your keybinding is properly registered and handled
+package org.mainbzclass.bzhelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -13,6 +12,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
@@ -20,16 +20,24 @@ import org.lwjgl.input.Keyboard;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod(modid = BzHelper.MODID, version = BzHelper.VERSION)
+@Mod(modid = BzHelper.MODID, name = BzHelper.NAME, version = BzHelper.VERSION)
 public class BzHelper {
     public static final String MODID = "bzhelper";
-    public static final String VERSION = "1.0";
+    public static final String NAME = "Bz Helper";
+    public static final String VERSION = "1.01";
 
     // Define the keybinding
     public static KeyBinding openBazaarKey;
 
     @EventHandler
+    public void preInit(FMLPreInitializationEvent event) {
+        System.out.println("[BZHelper] Pre-initialization started");
+    }
+
+    @EventHandler
     public void init(FMLInitializationEvent event) {
+        System.out.println("[BZHelper] Initialization started");
+
         // Register the keybinding with a default key of "B"
         openBazaarKey = new KeyBinding("Open Bazaar", Keyboard.KEY_B, "BZ Helper");
         ClientRegistry.registerKeyBinding(openBazaarKey);
@@ -40,15 +48,16 @@ public class BzHelper {
         // Register the command handler
         ClientCommandHandler.instance.registerCommand(new BazaarCommand());
 
-        System.out.println("BZ Helper initialized with keybinding: " + Keyboard.getKeyName(openBazaarKey.getKeyCode()));
+        System.out.println("[BZHelper] Mod initialized with keybinding: " + Keyboard.getKeyName(openBazaarKey.getKeyCode()));
+        System.out.println("[BZHelper] Check Controls menu under 'BZ Helper' category");
     }
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         // Check if our key is pressed
-        if (openBazaarKey.isPressed()) {
+        if (openBazaarKey != null && openBazaarKey.isPressed()) {
             sendBazaarCommand();
-            System.out.println("BZ Helper key pressed!");
+            System.out.println("[BZHelper] Key pressed! Sending /bz command");
         }
     }
 
